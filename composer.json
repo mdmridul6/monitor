@@ -1,0 +1,44 @@
+{
+    "name": "laravel-monitor/laravel-monitor",
+    "description": "Laravel Application Monitoring Package — sends non-sensitive health metadata to a centralized monitoring API.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "monitoring", "heartbeat", "telemetry", "health-check"],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0",
+        "illuminate/http": "^11.0|^12.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0",
+        "phpunit/phpunit": "^11.0",
+        "mockery/mockery": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelMonitor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelMonitor\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelMonitor\\LaravelMonitorServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "."
+        }
+    ]
+}
