@@ -1,12 +1,12 @@
 {
-    "name": "vendor/laravel-monitor",
+    "name": "mdmridul6/laravel-monitor",
     "description": "A Laravel package for monitoring application health and deployment metadata",
     "keywords": ["laravel", "monitoring", "health-check", "telemetry"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Package Developer",
-            "email": "developer@example.com"
+            "name": "Mridul",
+            "email": "mdmridul6@gmail.com"
         }
     ],
     "require": {
@@ -39,9 +39,15 @@
             "providers": [
                 "Vendor\\LaravelMonitor\\LaravelMonitorServiceProvider"
             ]
+        },
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     },
     "config": {
+        "preferred-install": {
+            "pestphp/pest-plugin": "dist"
+        },
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
