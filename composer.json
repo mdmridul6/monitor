@@ -38,6 +38,9 @@
     "config": {
         "preferred-install": {
             "pestphp/pest-plugin": "dist"
+        },
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     },
     "minimum-stability": "stable",
