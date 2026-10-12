@@ -2,11 +2,12 @@
 
 namespace Vendor\LaravelMonitor\Tests\Unit;
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Config;
 use Vendor\LaravelMonitor\MonitorManager;
 use Tests\TestCase;
+use Mockery as M;
 
 class MonitorManagerTest extends TestCase
 {
@@ -27,7 +28,7 @@ class MonitorManagerTest extends TestCase
             return str_contains($message, 'Heartbeat sent successfully');
         });
 
-        $monitor = new MonitorManager(app('config'), app('illuminate.http.ClientFactory'), app('illuminate.queue.QueueFactory'));
+        $monitor = new MonitorManager();
 
         $monitor->sendHeartbeat();
     }
@@ -44,11 +45,7 @@ class MonitorManagerTest extends TestCase
         Log::shouldReceive('warning')->never();
         Log::shouldReceive('error')->never();
 
-        $monitor = new MonitorManager(
-            app('config'),
-            app()->make('Illuminate\Http\ClientFactory'),
-            app()->make('Illuminate\Queue\QueueFactory')
-        );
+        $monitor = new MonitorManager();
 
         $monitor->sendHeartbeat();
     }
@@ -60,15 +57,12 @@ class MonitorManagerTest extends TestCase
         Config::set('monitor.api_token', null);
 
         // Mock Log facade to verify warning is logged
-        Log::shouldReceive('warning')->once()->withArgs(function ($message, $context) {
+        Log::shouldReceive('warning')->once()->withArgs(function ($message) {
             return str_contains($message, 'Missing required configuration');
         });
 
-        $monitor = new MonitorManager(
-            Config::getMonitors(),
-            app('illuminate.http.ClientFactory'),
-            app('illuminate.queue.QueueFactory')
-        );
+
+        $monitor = new MonitorManager();
 
         $monitor->sendHeartbeat(); // Should not throw exception
     }
@@ -82,7 +76,6 @@ class MonitorManagerTest extends TestCase
 
         // Mock HTTP facade to throw an exception
         Http::fake([
-            // Stub a thrown exception
             'https://monitor.example.com/api/v1/applications/heartbeat' => function () {
                 throw new \Exception('Network error');
             },
@@ -93,11 +86,8 @@ class MonitorManagerTest extends TestCase
             return str_contains($message, 'Failed to send heartbeat');
         });
 
-        $monitor = new MonitorManager(
-            Config::getMonitors(),
-            app('illuminate.http.ClientFactory'),
-            app('illuminate.queue.QueueFactory')
-        );
+
+        $monitor = new MonitorManager();
 
         $monitor->sendHeartbeat(); // Should not throw exception
     }
@@ -114,11 +104,7 @@ class MonitorManagerTest extends TestCase
             'https://monitor.example.com/api/v1/applications/heartbeat' => Http::response(['success' => true], 200),
         ]);
 
-        $monitor = new MonitorManager(
-            app('config'),
-            app()->make('Illuminate\Http\ClientFactory'),
-            app()->make('Illuminate\Queue\QueueFactory')
-        );
+        $monitor = new MonitorManager();
 
         // Access protected method via reflection
         $reflection = new \ReflectionMethod($monitor, 'prepareTelemetryPayload');
@@ -152,11 +138,7 @@ class MonitorManagerTest extends TestCase
             'https://monitor.example.com/api/v1/applications/heartbeat' => Http::response(['success' => true], 200),
         ]);
 
-        $monitor = new MonitorManager(
-            app('config'),
-            app()->make('Illuminate\Http\ClientFactory'),
-            app()->make('Illuminate\Queue\QueueFactory')
-        );
+        $monitor = new MonitorManager();
 
         // Access protected method via reflection
         $reflection = new \ReflectionMethod($monitor, 'prepareTelemetryPayload');

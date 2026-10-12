@@ -11,6 +11,17 @@ use Vendor\LaravelMonitor\Http\MonitoringClient;
 
 class MonitorManager
 {
+    protected $config;
+    protected $httpClient;
+    protected $queue;
+
+    public function __construct($config = null, $http = null, $queue = null)
+    {
+        $this->config = $config ?: app('config');
+        $this->httpClient = $http ?: app()->make(\Illuminate\Http\Client\Factory::class);
+        $this->queue = $queue ?: app('queue');
+    }
+
     /**
      * Send a heartbeat to the monitoring server.
      *
@@ -39,12 +50,12 @@ class MonitorManager
     public function sendHeartbeat()
     {
         // Check if monitoring is enabled
-        if (!config('monitor.enabled', false)) {
+        if (!$this->config->get('monitor.enabled', false)) {
             return;
         }
 
         // Validate required configuration
-        if (!config('monitor.endpoint') || !config('monitor.api_token')) {
+        if (!$this->config->get('monitor.endpoint') || !$this->config->get('monitor.api_token')) {
             Log::warning('Laravel Monitor: Missing required configuration (endpoint or api_token)');
             return;
         }
@@ -54,12 +65,12 @@ class MonitorManager
             $payload = $this->prepareTelemetryPayload();
 
             // Send the heartbeat request
-            $response = Http::timeout(config('monitor.timeout', 5))
+            $response = $this->httpClient->timeout($this->config->get('monitor.timeout', 5))
                 ->withHeaders([
-                    'Authorization' => 'Bearer ' . config('monitor.api_token'),
+                    'Authorization' => 'Bearer ' . $this->config->get('monitor.api_token'),
                     'Content-Type' => 'application/json',
                 ])
-                ->post(config('monitor.endpoint'), $payload);
+                ->post($this->config->get('monitor.endpoint'), $payload);
 
             // Log successful transmission
             if ($response->successful()) {

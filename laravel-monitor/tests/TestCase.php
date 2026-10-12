@@ -28,4 +28,13 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('monitor.retry_attempts', 3);
         $app['config']->set('monitor.retry_delay', 10);
     }
+
+    protected function resolveApplicationHttpClient($app)
+    {
+        return new \Illuminate\Http\Client\Factory(
+            new \Illuminate\Http\Client\ConnectionFactory(
+                $app->make(\Illuminate\Http\Client\ConnectionFactoryInterface::class)
+            )
+        );
+    }
 }

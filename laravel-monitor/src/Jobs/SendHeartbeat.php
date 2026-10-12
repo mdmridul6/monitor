@@ -36,7 +36,8 @@ class SendHeartbeat implements ShouldQueue
     public function handle()
     {
         // Send the heartbeat
-        (new MonitorManager())->sendHeartbeat();
+        $monitor = app('monitor');
+        $monitor->sendHeartbeat();
     }
 
     /**

@@ -47,12 +47,15 @@ class LaravelMonitorServiceProvider extends ServiceProvider
 
         // Bind the monitor manager into the service container
         $this->app->singleton('monitor', function ($app) {
-            return new MonitorManager(
-                $app->make('config'),
-                $app->make('illuminate.http.ClientFactory'),
-                $app->make('illuminate.queue.QueueFactory')
-            );
+            return new MonitorManager();
         });
+
+        // Register the http service if it doesn't exist (for older Laravel versions or tests)
+        if (!$this->app->bound('http')) {
+            $this->app->singleton('http', function ($app) {
+                return $app->make(\Illuminate\Http\Client\Factory::class);
+            });
+        }
     }
 
     /**
