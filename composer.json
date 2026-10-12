@@ -30,16 +30,16 @@
             "providers": [
                 "LaravelMonitor\\LaravelMonitorServiceProvider"
             ]
+        },
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     },
-    "scripts": {
-        "test": "vendor/bin/phpunit"
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "."
+    "config": {
+        "preferred-install": {
+            "pestphp/pest-plugin": "dist"
         }
-    ],
-    "minimum-stability": "dev"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
