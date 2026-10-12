@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'vendor/laravel-monitor',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '966277992d3e3beba683e473ed4a60df7e77e4ac',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1428,9 +1428,9 @@
             'dev_requirement' => false,
         ),
         'vendor/laravel-monitor' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '966277992d3e3beba683e473ed4a60df7e77e4ac',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
