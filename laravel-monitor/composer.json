@@ -53,5 +53,10 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [{
+        "name": "monitor",
+        "type": "path",
+        "url": "."
+    }]
 }
