@@ -1,5 +1,5 @@
 {
-    "name": "laravel-monitor/laravel-monitor",
+    "name": "mdmridul6/laravel-monitor",
     "description": "Laravel Application Monitoring Package — sends non-sensitive health metadata to a centralized monitoring API.",
     "type": "library",
     "license": "MIT",
@@ -38,9 +38,6 @@
     "config": {
         "preferred-install": {
             "pestphp/pest-plugin": "dist"
-        },
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
         }
     },
     "minimum-stability": "stable",
